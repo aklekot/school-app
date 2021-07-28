@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.akademia.entity.Student;
 import pl.akademia.entity.Teacher;
 import pl.akademia.exceptions.StudentNotFoundException;
+import pl.akademia.exceptions.TeacherNotFoundException;
 import pl.akademia.service.StudentService;
 
 import java.util.List;
@@ -31,13 +32,11 @@ public class StudentRestController {
                 throw new StudentNotFoundException("Student not found");
             }
 
-          //  return new ResponseEntity<>(students, HttpStatus.OK);
         }
-        if (students.isEmpty()){
-            throw new StudentNotFoundException("List of students is empty");
-        }
+
         return new ResponseEntity<>(students,HttpStatus.OK);
     }
+
 
     @GetMapping("/students/{className}")
     public ResponseEntity<?> getStudentByClassName(@RequestParam(required = false, value = "className") String className){
@@ -54,7 +53,7 @@ public class StudentRestController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<Student> addOrUpdateTeacher(@RequestBody Student student){
+    public ResponseEntity<Student> addOrUpdateStudent(@RequestBody Student student){
         if (student.getId() == null){
             return new ResponseEntity<>(studentService.addOrUpdateStudent(student),HttpStatus.CREATED);
         }
@@ -62,7 +61,7 @@ public class StudentRestController {
     }
 
     @DeleteMapping("/students/{id}/delete")
-    public  ResponseEntity<?> de(@PathVariable Long id){
+    public  ResponseEntity<?> deleteStudentById(@PathVariable Long id){
         if (studentService.deleteStudentById(id)>0){
             return new ResponseEntity<>(HttpStatus.OK);
         }

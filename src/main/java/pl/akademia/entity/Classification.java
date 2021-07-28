@@ -19,7 +19,6 @@ public class Classification {
     @Column(name="score")
     private int score;
 
-    @OneToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @Column(name = "student_id", nullable = false)
+    private Long studentId;
 }

@@ -31,10 +31,11 @@ public class StudentRestController {
             if (students == null) {
                 throw new StudentNotFoundException("Student not found");
             }
-
+            return new ResponseEntity<>(students,HttpStatus.OK);
         }
+    List<Student> students1 = studentService.getStudents();
+        return  new ResponseEntity<>(students1,HttpStatus.OK);
 
-        return new ResponseEntity<>(students,HttpStatus.OK);
     }
 
 

@@ -42,7 +42,7 @@ public class TeacherService {
         return repository.findById(id).orElse(null);
     }
 
-    public Teacher getTeacherBySubject(String subject){
+    public List<Teacher> getTeacherBySubject(String subject){
         return repository.getTeacherBySubject(subject);
     }
 

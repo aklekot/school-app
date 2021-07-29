@@ -29,8 +29,10 @@ public class TeacherRestController {
             if (teachers == null) {
                 throw new TeacherNotFoundException("Teacher not found");
             }
+            return new ResponseEntity<>(teachers,HttpStatus.OK);
         }
-        return new ResponseEntity<>(teachers,HttpStatus.OK);
+        List<Teacher> teachers1 = teacherService.getAllTeachers();
+        return new ResponseEntity<>(teachers1,HttpStatus.OK);
     }
 
 
@@ -46,12 +48,12 @@ public class TeacherRestController {
     }
 
     @GetMapping("/teachers/subject/{subject}")
-    public ResponseEntity<Teacher> getTeacherBySubject(@PathVariable String subject){
-        Teacher teacher = teacherService.getTeacherBySubject(subject);
-        if (teacher == null){
+    public ResponseEntity<?> getTeacherBySubject(@PathVariable String subject){
+        List<Teacher> teachers = teacherService.getTeacherBySubject(subject);
+        if (teachers == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return  new ResponseEntity<>(teacher, HttpStatus.OK);
+        return  new ResponseEntity<>(teachers, HttpStatus.OK);
     }
 
     @PostMapping("/teachers")

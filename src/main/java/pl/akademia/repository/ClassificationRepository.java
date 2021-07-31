@@ -16,6 +16,7 @@ public interface ClassificationRepository extends JpaRepository<Classification, 
     List<Classification> getStudentMarks(Long id);
 
     @Query(value = "select avg(c.score) from Classification c  where c.studentId = :id")
-    //@Query(nativeQuery = true, value = "SELECT subject, student_id, score FROM classification where student_id= :id")
-    BigDecimal avgStudentById(Long id);
+      BigDecimal avgStudentById(Long id);
+
+
 }

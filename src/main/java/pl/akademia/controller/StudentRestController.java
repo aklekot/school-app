@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.akademia.entity.Student;
 import pl.akademia.entity.Teacher;
 import pl.akademia.exceptions.StudentNotFoundException;
-import pl.akademia.exceptions.TeacherNotFoundException;
+import pl.akademia.exceptions.ClassNotFoundException;
 import pl.akademia.service.StudentService;
 
 import java.util.List;
@@ -26,14 +26,15 @@ public class StudentRestController {
 
     @GetMapping("/students")
     public ResponseEntity<?> getStudents(@RequestParam(required = false, value = "lastName") String lastName){
-        List<Student> students = studentService.getStudentByLastname(lastName);
+
         if (lastName!=null) {
-            if (students == null) {
+            List <Student> students = studentService.getStudentByLastname(lastName);
+            if (students.isEmpty()) {
                 throw new StudentNotFoundException("Student not found");
             }
-            return new ResponseEntity<>(students,HttpStatus.OK);
+         return new ResponseEntity<>(students,HttpStatus.OK);
         }
-    List<Student> students1 = studentService.getStudents();
+        List<Student> students1 = studentService.getStudents();
         return  new ResponseEntity<>(students1,HttpStatus.OK);
 
     }
@@ -41,16 +42,13 @@ public class StudentRestController {
 
     @GetMapping("/students/{className}")
     public ResponseEntity<?> getStudentByClassName(@RequestParam(required = false, value = "className") String className){
-//        if (className!=null) {
-//            List<Student> student = studentService.getStudentByLastname(lastName);
-//            if (student == null) {
-//                throw new StudentNotFoundException("Student not found");
-//            }
-//
-//            return new ResponseEntity<>(student, HttpStatus.OK);
-    //    }
-        List<Student> students = studentService.getStudentByClassName(className);
-        return new ResponseEntity<>(students,HttpStatus.OK);
+        List<Student> student = studentService.getStudentByClassName(className);
+        if (className!=null) {
+            if (student.isEmpty()) {
+               throw new ClassNotFoundException("Class not found");
+           }
+        }
+        return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
     @PostMapping("/students")

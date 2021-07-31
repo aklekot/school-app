@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="headers::default"></head>
+<body>
+<div class="container">
+
+    <div class="list-group-horizontal-lg">
+
+        <form action="/addStudent">
+            <button type="submit" class="btn btn-outline-primary">zaktualizuj/zapisz ucznia</button>
+        </form>
+
+        <form action="/getStudents">
+            <button type="submit" class="btn btn-outline-primary">pokaż wszystkich uczniów</button>
+        </form>
+
+        <form action="/getStudentByLastname">
+            <button type="submit" class="btn btn-outline-primary">wyszukaj ucznia po nazwisku</button>
+            <input name="lastName" class="form-control-sm" placeholder="Wpisz nazwisko" th:type="text">
+        </form>
+
+        <form action="/getStudentByClassName">
+            <button type="submit" class="btn btn-outline-primary">wyszukaj uczniów wg klasy</button>
+            <input name="className" class="form-control-sm" placeholder="wpisz nazwę klasy" th:type="text">
+        </form>
+
+
+
+        <div class="row">
+            <div class="alert alert-success w-100" role="alert" th:if="${info != null}">
+                <p th:text="${info}"></p>
+            </div>
+        </div>
+
+        <table class="table table-success table-striped" xmlns:th="https://www.thymeleaf.org" th:if="${studentByLastname != null}">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>last_name</th>
+                <th>birth_date</th>
+                <th>class_name</th>
+            </tr>
+            <tr th:value="${studentByLastname}">
+                <td th:text="${studentByLastname.getId()}"></td>
+
+            </tr>
+        </table>
+
+
+
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

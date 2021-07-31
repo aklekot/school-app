@@ -20,5 +20,5 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
   List<Teacher> getTeacherByLastname(String lastName);
 
   @Query(value = "select t from Teacher t where t.subject= :subject")
-  Teacher getTeacherBySubject(String subject);
+  List<Teacher> getTeacherBySubject(String subject);
 }

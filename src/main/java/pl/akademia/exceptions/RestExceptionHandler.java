@@ -41,5 +41,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = {ClassNotFoundException.class})
+    protected ResponseEntity<Object> handleNotFoundClassException(RuntimeException e, WebRequest request) {
+        String param = request.getParameter("className");
+        ExceptionBody body = ExceptionBody
+                .builder()
+                .message(e.getMessage() + " className: " + param)
+                .status(HttpStatus.NOT_FOUND.value())
+                .path(request.getDescription(true))
+                .timestamp(new Date().toString())
+                .build();
+        return handleExceptionInternal(e, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
 
 }
